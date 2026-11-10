@@ -277,8 +277,8 @@ sqa-orangehrm-cypress/
 │       ├── 02-create-employee.png
 │       ├── 03-read-employee.png
 │       ├── 04-update-employee.png
-│       ├── 05-delete-employee.png
-│       └── 06-test-results.png
+│       └── 05-delete-employee.png
+│       
 │
 └── README.md
 ```
@@ -333,7 +333,7 @@ Editor ini digunakan untuk mengelola file pengujian.
 Clone repository menggunakan perintah berikut:
 
 ```bash
-git clone https://github.com/USERNAME/sqa-orangehrm-cypress.git
+git clone https://github.com/illhammf/sqa-orangehrm-cypress.git
 ```
 
 Masuk ke direktori proyek:
@@ -342,7 +342,7 @@ Masuk ke direktori proyek:
 cd sqa-orangehrm-cypress
 ```
 
-Ganti `USERNAME` dengan username GitHub pemilik repository.
+Ganti `illhammf` dengan username GitHub pemilik repository.
 
 ### 7.4 Instalasi Dependency
 
