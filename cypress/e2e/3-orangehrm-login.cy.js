@@ -7,23 +7,26 @@ describe('OrangeHRM - Login Testing', () => {
 
   it('TC-LOGIN-001 - Berhasil login menggunakan akun valid', () => {
 
-    // Mengisi username
+    // Input username
     cy.get('input[name="username"]')
+      .should('be.visible')
       .type('Admin');
 
-    // Mengisi password akun demo
+    // Input password
     cy.get('input[name="password"]')
+      .should('be.visible')
       .type('admin123');
 
-    // Klik tombol Login
+    // Klik tombol login
     cy.get('button[type="submit"]')
       .click();
 
-    // Memastikan berhasil masuk ke Dashboard
+    // Memastikan URL mengarah ke Dashboard
     cy.url().should('include', '/dashboard/index');
 
-    // Memastikan halaman Dashboard tampil
-    cy.contains('Dashboard').should('be.visible');
+    // Memastikan judul halaman adalah Dashboard
+    cy.get('.oxd-topbar-header-title')
+      .should('contain.text', 'Dashboard');
 
   });
 
