@@ -1,17 +1,17 @@
 
 describe('OrangeHRM - Read Employee Testing', () => {
 
-  // Data karyawan yang sebelumnya berhasil dibuat
+  // Gunakan Employee ID yang benar-benar masih tersedia
   const employee = {
-    employeeId: '4322398755',
+    employeeId: 'ISI_EMPLOYEE_ID_AKTIF',
     firstName: 'SQA',
     middleName: 'Automation',
     lastName: 'Kelompok10',
   };
 
-  // Login sebelum pengujian
   beforeEach(() => {
 
+    // Login
     cy.visit('/web/index.php/auth/login');
 
     cy.get('input[name="username"]')
@@ -30,19 +30,13 @@ describe('OrangeHRM - Read Employee Testing', () => {
 
   it('TC-READ-001 - Berhasil mencari data karyawan berdasarkan Employee ID', () => {
 
-    // =====================================
-    // STEP 1 - Membuka halaman Employee List
-    // =====================================
-
+    // STEP 1 - Membuka Employee List
     cy.visit('/web/index.php/pim/viewEmployeeList');
 
     cy.contains('Employee Information')
       .should('be.visible');
 
-    // =====================================
     // STEP 2 - Mengisi Employee ID
-    // =====================================
-
     cy.contains('label', /^Employee Id$/)
       .closest('.oxd-input-group')
       .find('input')
@@ -50,25 +44,19 @@ describe('OrangeHRM - Read Employee Testing', () => {
       .clear()
       .type(employee.employeeId);
 
-    // =====================================
     // STEP 3 - Melakukan pencarian
-    // =====================================
-
-    cy.get('button[type="submit"]')
-      .contains('Search')
+    cy.contains('button', 'Search')
       .click();
 
-    // =====================================
-    // STEP 4 - Memastikan data ditemukan
-    // =====================================
-
-    cy.contains('.oxd-table-cell', employee.employeeId)
+    // STEP 4 - Menunggu hasil pencarian selesai
+    cy.get('.oxd-table-body', { timeout: 15000 })
       .should('be.visible');
 
-    // =====================================
-    // STEP 5 - Memverifikasi informasi karyawan
-    // =====================================
+    // STEP 5 - Memastikan data ditemukan
+    cy.get('.oxd-table-body')
+      .should('contain', employee.employeeId);
 
+    // STEP 6 - Memverifikasi informasi karyawan
     cy.contains('.oxd-table-cell', employee.employeeId)
       .closest('.oxd-table-row')
       .within(() => {
@@ -84,10 +72,7 @@ describe('OrangeHRM - Read Employee Testing', () => {
 
       });
 
-    // =====================================
-    // STEP 6 - Menampilkan hasil pengujian
-    // =====================================
-
+    // STEP 7 - Log hasil pengujian
     cy.log('READ EMPLOYEE BERHASIL');
 
     cy.log(`Employee ID: ${employee.employeeId}`);
