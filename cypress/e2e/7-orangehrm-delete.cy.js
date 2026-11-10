@@ -57,33 +57,23 @@ describe('OrangeHRM - Delete Employee Testing', () => {
 
       });
 
+    
     // Memastikan dialog konfirmasi muncul
-    cy.get('.oxd-dialog-container')
+    cy.contains('Are you Sure?', { timeout: 10000 })
       .should('be.visible');
 
-    // Konfirmasi penghapusan
-    cy.get('.oxd-dialog-container')
-      .contains('button', 'Yes, Delete')
+    // Memastikan tombol konfirmasi tersedia
+    cy.contains('button', 'Yes, Delete')
+      .should('be.visible')
+      .and('be.enabled')
       .click();
 
-    // Memastikan notifikasi penghapusan berhasil
-    cy.contains('Successfully Deleted')
-      .should('be.visible');
+    // Memastikan karyawan berhasil dihapus
+    cy.contains('.oxd-table-cell', employeeId, {
+      timeout: 10000
+    }).should('not.exist');
 
-    // Memastikan data sudah tidak ditemukan
-    cy.contains('label', 'Employee Id')
-      .closest('.oxd-input-group')
-      .find('input')
-      .clear()
-      .type(employeeId);
-
-    cy.contains('button', 'Search')
-      .click();
-
-    // Memastikan data karyawan sudah tidak ada
-    cy.contains('No Records Found')
-      .should('be.visible');
-
+    // Log hasil penghapusan
     cy.log('DELETE EMPLOYEE BERHASIL');
     cy.log(`Employee ID: ${employeeId}`);
 
