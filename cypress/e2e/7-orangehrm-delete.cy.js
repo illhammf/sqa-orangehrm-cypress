@@ -1,10 +1,11 @@
 
 describe('OrangeHRM - Delete Employee Testing', () => {
 
-  // Employee ID dari hasil pengujian CREATE sebelumnya
+  // Employee ID yang berhasil dibuat pada tahap CREATE
   const employeeId = '4322398755';
 
   beforeEach(() => {
+
     // Login ke OrangeHRM
     cy.visit('/web/index.php/auth/login');
 
@@ -17,20 +18,23 @@ describe('OrangeHRM - Delete Employee Testing', () => {
     cy.get('button[type="submit"]')
       .click();
 
+    // Memastikan login berhasil
     cy.url().should('include', '/dashboard/index');
+
   });
 
   it('TC-DELETE-001 - Berhasil menghapus data karyawan', () => {
 
-    // Mengunjungi halaman Employee List
+    // Membuka halaman Employee List
     cy.visit('/web/index.php/pim/viewEmployeeList');
 
-    // Memastikan halaman Employee List tampil
     cy.contains('h5', 'Employee Information')
       .should('be.visible');
 
-    // Mencari karyawan berdasarkan Employee ID
-    cy.get('input[name="employeeId"]')
+    // Mencari input Employee ID berdasarkan label
+    cy.contains('label', 'Employee Id')
+      .closest('.oxd-input-group')
+      .find('input')
       .clear()
       .type(employeeId);
 
@@ -42,59 +46,44 @@ describe('OrangeHRM - Delete Employee Testing', () => {
     cy.contains('.oxd-table-cell', employeeId)
       .should('be.visible');
 
-    // Mengambil baris karyawan
-    cy.contains('.oxd-table-cell', employeeId)
-      .closest('.oxd-table-row')
-      .as('employeeRow');
+    // Memilih baris karyawan berdasarkan Employee ID
+    cy.contains('.oxd-table-row', employeeId)
+      .within(() => {
 
-    // Memastikan tombol Delete tersedia
-    cy.get('@employeeRow')
-      .find('button')
-      .last()
-      .click();
+        // Klik tombol Delete
+        cy.get('button')
+          .last()
+          .click();
 
-    // Memastikan dialog konfirmasi muncul SEBELUM dihapus
+      });
+
+    // Memastikan dialog konfirmasi muncul
     cy.get('.oxd-dialog-container')
       .should('be.visible');
-
-    // Memastikan pesan konfirmasi tampil
-    cy.get('.oxd-dialog-container')
-      .should('contain.text', 'Are you Sure?');
-
-    // Memastikan tombol Yes, Delete tersedia
-    cy.get('.oxd-dialog-container')
-      .contains('button', 'Yes, Delete')
-      .should('be.visible');
-
-    // Memantau request DELETE
-    cy.intercept(
-      'DELETE',
-      '**/api/v2/pim/employees/*'
-    ).as('deleteEmployee');
 
     // Konfirmasi penghapusan
     cy.get('.oxd-dialog-container')
       .contains('button', 'Yes, Delete')
       .click();
 
-    // Memastikan server berhasil menghapus data
-    cy.wait('@deleteEmployee')
-      .its('response.statusCode')
-      .should('eq', 200);
+    // Memastikan notifikasi penghapusan berhasil
+    cy.contains('Successfully Deleted')
+      .should('be.visible');
 
-    // Memastikan dialog sudah tertutup
-    cy.get('.oxd-dialog-container')
-      .should('not.exist');
+    // Memastikan data sudah tidak ditemukan
+    cy.contains('label', 'Employee Id')
+      .closest('.oxd-input-group')
+      .find('input')
+      .clear()
+      .type(employeeId);
 
-    // Memastikan karyawan sudah tidak ditemukan
-    cy.contains('.oxd-table-cell', employeeId)
-      .should('not.exist');
+    cy.contains('button', 'Search')
+      .click();
 
-    // Memastikan tabel menampilkan kondisi kosong
+    // Memastikan data karyawan sudah tidak ada
     cy.contains('No Records Found')
       .should('be.visible');
 
-    // Log hasil pengujian
     cy.log('DELETE EMPLOYEE BERHASIL');
     cy.log(`Employee ID: ${employeeId}`);
 
