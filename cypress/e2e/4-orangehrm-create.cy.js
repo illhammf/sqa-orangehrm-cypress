@@ -49,13 +49,18 @@ describe('OrangeHRM - Create Employee Testing', () => {
       .clear()
       .type(employeeId);
 
-    // Menyimpan data
-    cy.get('button[type="submit"]')
-      .contains('Save')
-      .click();
+    // Klik tombol Save
+    cy.get('button[type="submit"]').click();
 
-    // Verifikasi halaman Personal Details
+    // Memastikan berhasil masuk ke Personal Details
     cy.url().should('include', '/pim/viewPersonalDetails/');
+
+    // Memastikan halaman Personal Details tampil
+    cy.contains('Personal Details').should('be.visible');
+
+    // Memastikan Employee ID sesuai
+    cy.get('input[name="employeeId"]')
+    .should('have.value', employeeId);
 
     // Verifikasi nama karyawan
     cy.get('input[name="firstName"]')
