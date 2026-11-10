@@ -9,7 +9,13 @@ describe('OrangeHRM - Create Employee Testing', () => {
 
   it('TC-CREATE-001 - Berhasil menambahkan karyawan baru', () => {
 
-    const employeeId = `SQA10${Date.now()}`;
+    // Membuat Employee ID unik maksimal 8 digit
+    const employeeId = String(Date.now()).slice(-8);
+
+    // Mengisi Employee ID
+    cy.get('input[name="employeeId"]')
+    .clear()
+    .type(employeeId);
 
     // Login
     cy.visit('/web/index.php/auth/login');
