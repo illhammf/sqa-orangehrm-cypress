@@ -2,7 +2,7 @@
 describe('OrangeHRM - Delete Employee Testing', () => {
 
   // Employee ID yang berhasil dibuat pada tahap CREATE
-  const employeeId = '4322398755';
+  const employeeId = '4324652364';
 
   beforeEach(() => {
 
