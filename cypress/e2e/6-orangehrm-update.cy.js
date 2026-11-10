@@ -1,0 +1,79 @@
+
+describe('OrangeHRM - Update Employee Testing', () => {
+
+  const employee = {
+    employeeId: '4322398755',
+    oldMiddleName: 'Automation',
+    newMiddleName: 'Updated',
+  };
+
+  beforeEach(() => {
+
+    // Login ke OrangeHRM
+    cy.visit('/web/index.php/auth/login');
+
+    cy.get('input[name="username"]').type('Admin');
+    cy.get('input[name="password"]').type('admin123');
+    cy.get('button[type="submit"]').click();
+
+    cy.url().should('include', '/dashboard/index');
+
+  });
+
+  it('TC-UPDATE-001 - Berhasil memperbarui data karyawan', () => {
+
+    // Membuka halaman Employee List
+    cy.visit('/web/index.php/pim/viewEmployeeList');
+
+    // Mencari karyawan berdasarkan Employee ID
+    cy.contains('label', 'Employee Id')
+      .closest('.oxd-input-group')
+      .find('input')
+      .clear()
+      .type(employee.employeeId);
+
+    // Klik Search
+    cy.contains('button', 'Search').click();
+
+    // Memastikan data ditemukan
+    cy.contains('.oxd-table-cell', employee.employeeId)
+      .should('be.visible');
+
+    // Mengambil baris karyawan
+    cy.contains('.oxd-table-row', employee.employeeId)
+      .within(() => {
+
+        // Klik tombol Edit
+        cy.get('button').first().click();
+
+      });
+
+    // Memastikan halaman Personal Details tampil
+    cy.url().should('include', '/pim/viewPersonalDetails/');
+
+    cy.contains('Personal Details')
+      .should('be.visible');
+
+    // Mengubah nama tengah
+    cy.get('input[name="middleName"]')
+      .should('have.value', employee.oldMiddleName)
+      .clear()
+      .type(employee.newMiddleName);
+
+    // Menyimpan perubahan pada Personal Details
+    cy.contains('button', 'Save')
+      .first()
+      .click();
+
+    // Memastikan data berhasil disimpan
+    cy.get('input[name="middleName"]')
+      .should('have.value', employee.newMiddleName);
+
+    // Log hasil pengujian
+    cy.log('UPDATE EMPLOYEE BERHASIL');
+    cy.log(`Employee ID: ${employee.employeeId}`);
+    cy.log(`Middle Name: ${employee.newMiddleName}`);
+
+  });
+
+});
