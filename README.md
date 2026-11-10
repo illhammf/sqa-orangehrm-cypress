@@ -862,5 +862,5 @@ Berikut beberapa dokumentasi resmi yang digunakan sebagai referensi pembelajaran
   
   Dibuat untuk memenuhi tugas mata kuliah Software Quality Assurance (SQA).
   
-  **Kelompok SQA - 2026**
+  **Kelompok 1 SQA - 2026**
 </p>
