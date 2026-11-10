@@ -709,12 +709,6 @@ Keterangan: Dokumentasi proses konfirmasi penghapusan dan hasil penghapusan data
 
 **Bukti hasil pengujian Cypress**
 
-![Cypress Test Results](docs/screenshots/06-test-results.png)
-
-Keterangan: Dokumentasi hasil keseluruhan pengujian yang memperlihatkan status setiap test case pada Cypress Runner.
-
-> Catatan: File gambar di atas merupakan lokasi screenshot yang perlu diisi dengan hasil tangkapan layar asli dari proses pengujian.
-
 ## 10. Hasil dan Evaluasi Pengujian
 
 Berdasarkan pengujian yang telah dilakukan, seluruh skenario utama berhasil dijalankan sesuai dengan hasil yang diharapkan.
