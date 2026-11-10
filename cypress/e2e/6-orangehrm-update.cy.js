@@ -3,8 +3,7 @@ describe('OrangeHRM - Update Employee Testing', () => {
 
   const employee = {
     employeeId: '4322398755',
-    oldMiddleName: 'Automation',
-    newMiddleName: 'Updated',
+    newMiddleName: 'AutomationUpdated',
   };
 
   beforeEach(() => {
@@ -32,20 +31,16 @@ describe('OrangeHRM - Update Employee Testing', () => {
       .clear()
       .type(employee.employeeId);
 
-    // Klik Search
     cy.contains('button', 'Search').click();
 
-    // Memastikan data ditemukan
+    // Memastikan karyawan ditemukan
     cy.contains('.oxd-table-cell', employee.employeeId)
       .should('be.visible');
 
-    // Mengambil baris karyawan
+    // Membuka halaman Edit Employee
     cy.contains('.oxd-table-row', employee.employeeId)
       .within(() => {
-
-        // Klik tombol Edit
         cy.get('button').first().click();
-
       });
 
     // Memastikan halaman Personal Details tampil
@@ -54,18 +49,28 @@ describe('OrangeHRM - Update Employee Testing', () => {
     cy.contains('Personal Details')
       .should('be.visible');
 
+    // Memastikan input nama tengah tersedia
+    cy.get('input[name="middleName"]')
+      .should('be.visible');
+
     // Mengubah nama tengah
     cy.get('input[name="middleName"]')
-      .should('have.value', employee.oldMiddleName)
       .clear()
       .type(employee.newMiddleName);
 
-    // Menyimpan perubahan pada Personal Details
+    // Menyimpan perubahan
     cy.contains('button', 'Save')
       .first()
       .click();
 
-    // Memastikan data berhasil disimpan
+    // Memastikan perubahan berhasil tersimpan
+    cy.get('input[name="middleName"]')
+      .should('have.value', employee.newMiddleName);
+
+    // Refresh halaman untuk memastikan data tersimpan
+    cy.reload();
+
+    // Verifikasi data setelah halaman dimuat ulang
     cy.get('input[name="middleName"]')
       .should('have.value', employee.newMiddleName);
 
