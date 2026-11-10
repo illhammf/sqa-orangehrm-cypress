@@ -2,12 +2,12 @@
 describe('OrangeHRM - Read Employee Testing', () => {
 
   // Gunakan Employee ID yang benar-benar masih tersedia
-  const employee = {
-    employeeId: 'ISI_EMPLOYEE_ID_AKTIF',
+    const employee = {
+    employeeId: '4325965526',
     firstName: 'SQA',
     middleName: 'Automation',
     lastName: 'Kelompok10',
-  };
+    };
 
   beforeEach(() => {
 
@@ -48,13 +48,28 @@ describe('OrangeHRM - Read Employee Testing', () => {
     cy.contains('button', 'Search')
       .click();
 
-    // STEP 4 - Menunggu hasil pencarian selesai
-    cy.get('.oxd-table-body', { timeout: 15000 })
-      .should('be.visible');
+    // STEP 4 - Memastikan data ditemukan
 
-    // STEP 5 - Memastikan data ditemukan
-    cy.get('.oxd-table-body')
-      .should('contain', employee.employeeId);
+    cy.contains('.oxd-table-cell', employee.employeeId, {
+    timeout: 15000
+    })
+    .should('be.visible');
+
+    // STEP 5 - Memverifikasi informasi karyawan
+
+    cy.contains('.oxd-table-row', employee.employeeId)
+    .within(() => {
+
+        cy.contains(employee.firstName)
+        .should('be.visible');
+
+        cy.contains(employee.middleName)
+        .should('be.visible');
+
+        cy.contains(employee.lastName)
+        .should('be.visible');
+
+    });
 
     // STEP 6 - Memverifikasi informasi karyawan
     cy.contains('.oxd-table-cell', employee.employeeId)
