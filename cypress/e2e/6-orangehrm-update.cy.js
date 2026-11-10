@@ -2,7 +2,7 @@
 describe('OrangeHRM - Update Employee Testing', () => {
 
   const employee = {
-    employeeId: '4322398755',
+    employeeId: '4325965526', // Ganti dengan Employee ID yang valid
     newMiddleName: 'AutomationUpdated',
   };
 
