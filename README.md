@@ -898,16 +898,6 @@ Keterangan:
 
 Screenshot ini menunjukkan proses konfirmasi penghapusan data karyawan dan hasil ketika data berhasil dihapus dari Employee List.
 
-### 9.6 Hasil Keseluruhan Pengujian
-
-**Bukti Hasil Pengujian Cypress**
-
-![All Tests](docs/screenshots/06-all-tests.png)
-
-Keterangan:
-
-Screenshot ini digunakan untuk menunjukkan rekapitulasi hasil seluruh skenario pengujian pada Cypress Runner.
-
 ---
 
 ## 10. Hasil dan Evaluasi Pengujian
