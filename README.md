@@ -363,9 +363,8 @@ sqa-orangehrm-cypress/
 │       ├── 02-create-employee.png
 │       ├── 03-read-employee.png
 │       ├── 04-update-employee.png
-│       ├── 05-delete-employee.png
-│       └── 06-all-tests.png
-│
+│       └── 05-delete-employee.png
+│   
 ├── cypress.config.js
 ├── package.json
 ├── package-lock.json
