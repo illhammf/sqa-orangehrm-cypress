@@ -1,0 +1,60 @@
+
+# ==========================================
+# NODE.JS & NPM
+# ==========================================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# ==========================================
+# CYPRESS
+# ==========================================
+
+# Hasil screenshot otomatis Cypress
+cypress/screenshots/
+
+# Hasil video otomatis Cypress
+cypress/videos/
+
+# ==========================================
+# ENVIRONMENT & SECRETS
+# ==========================================
+
+.env
+.env.*
+!.env.example
+
+# ==========================================
+# BUILD & COVERAGE
+# ==========================================
+
+dist/
+build/
+coverage/
+.nyc_output/
+
+# ==========================================
+# OPERATING SYSTEM
+# ==========================================
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==========================================
+# EDITOR & IDE
+# ==========================================
+
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+
+# ==========================================
+# LOG FILES
+# ==========================================
+
+*.log
